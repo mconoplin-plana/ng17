@@ -1,0 +1,11 @@
+app-header {
+  .logo {
+    object-fit: contain;
+  }
+
+  button.active {
+    .mat-mdc-button-persistent-ripple::before {
+      opacity: var(--mat-text-button-hover-state-layer-opacity);
+    }
+  }
+}

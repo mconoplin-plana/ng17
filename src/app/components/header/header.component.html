@@ -1,0 +1,23 @@
+<header class="bg-light pt-2 pb-2 shadow">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-4 left-side">
+        <a routerLink="/">
+          <img ngSrc="assets/logo.png" width="70" height="70" priority class="logo" alt="logo">
+        </a>
+
+        <nav class="d-flex align-items-center gap-2">
+          @for (link of links; track link.link) {
+            <button mat-button color="primary" [routerLink]="link.link" routerLinkActive="active">{{ link.name }}</button>
+          }
+        </nav>
+      </div>
+
+      <button mat-mini-fab color="primary" (click)="openModal()">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+  </div>
+</header>
+
+

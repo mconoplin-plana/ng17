@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Application configurations</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Select main curency</h3>
+  <mat-radio-group aria-label="Select an currency" [(ngModel)]="selectedCurrency">
+    @for(currency of currencies(); track currency.id) {
+      <mat-radio-button [value]="currency">{{ currency.name }}</mat-radio-button>
+    }
+  </mat-radio-group>
+
+  <br><br><br>
+
+  <h3>Select preferred coins</h3>
+  <section>
+    @for(coin of coins(); track coin.id) {
+      <mat-checkbox>{{ coin.name }}</mat-checkbox>
+    }
+  </section>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Update</button>
+</mat-dialog-actions>
