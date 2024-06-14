@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {COINS} from "../constants/coins";
-import { CoinData, CoinInfo } from '../models/coin';
-import cloneDeep from 'lodash/cloneDeep';
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {CoinData} from '../models/coin.model';
 import { Observable } from 'rxjs';
+import {Currency} from "../models/currency.model";
+import {COINS} from "../constants/coins";
+import cloneDeep from 'lodash/cloneDeep';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
   private apiUrl = 'https://api.coingecko.com/api/v3/coins/markets';
-  private coins: CoinInfo[] = cloneDeep(COINS);
-  private currentCurrency = 'usd';
 
-  constructor(private readonly httpClient: HttpClient) {
-  }
+  constructor(private readonly httpClient: HttpClient) {}
 
-  public getCryptoData(): Observable<CoinData[]> {
-    const coinsString = this.coins.map(x => x.id).join(',');
+  public getCryptoData(currency: Currency): Observable<CoinData[]> {
+    let params = new HttpParams();
+    params = params.set('ids', cloneDeep(COINS).map(x => x.id).join(','));
+    params = params.set('vs_currency', currency);
 
-    return this.httpClient.get<CoinData[]>(`${this.apiUrl}?ids=${coinsString}&vs_currency=${this.currentCurrency}`);
+    return this.httpClient.get<CoinData[]>(this.apiUrl, {params});
   }
 }

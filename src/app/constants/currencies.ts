@@ -1,4 +1,4 @@
-import { Currency, CurrencyInfo } from "../models/currency";
+import { Currency, CurrencyInfo } from "../models/currency.model";
 
 export const CURRENCIES: CurrencyInfo[] = [
 	{ id: Currency.USD, name: 'US Dollar', symbol: '$' },

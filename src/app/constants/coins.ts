@@ -1,4 +1,4 @@
-import { Coin, CoinInfo } from "../models/coin";
+import { Coin, CoinInfo } from "../models/coin.model";
 
 export const COINS: CoinInfo[] = [
 	{ name: 'Bitcoin', id: Coin.BTC },

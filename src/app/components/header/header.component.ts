@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
@@ -21,19 +21,20 @@ export class HeaderComponent {
     {name: 'About Us', link: '/about'}
   ];
 
-  constructor(private readonly dialog: MatDialog) {
-  }
+  constructor(private readonly dialog: MatDialog, private readonly cdr: ChangeDetectorRef, private readonly appRef: ApplicationRef) {}
 
   public openModal(): void {
     const dialogRef = this.dialog.open(ConfigComponent, {
       width: '60vw'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(3);
+      setTimeout(() => {
+        // this.cdr.detectChanges();
 
-  public changeCurrency(): void {
+        this.appRef.tick();
+      });
+    });
   }
 }

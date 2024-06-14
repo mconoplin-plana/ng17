@@ -1,13 +1,13 @@
-import { Component, signal } from '@angular/core';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {Component, effect, inject, signal} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule} from '@angular/material/radio';
 import { CURRENCIES } from '../../constants/currencies';
-import { Currency } from '../../models/currency';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { COINS } from '../../constants/coins';
+import {CryptoStore} from "../../store/crypto.store";
 
 @Component({
   selector: 'app-config',
@@ -17,7 +17,14 @@ import { COINS } from '../../constants/coins';
   styleUrl: './config.component.scss'
 })
 export class ConfigComponent {
-  public currencies = signal(CURRENCIES);
-  public coins = signal(COINS);
-  public selectedCurrency: Currency = Currency.USD;
+  public currencies = CURRENCIES;
+  public coins = COINS;
+
+  public readonly store = inject(CryptoStore);
+
+  constructor() {
+    effect(() => {
+      console.log(2);
+    });
+  }
 }

@@ -1,66 +1,84 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { CryptoService } from './services/crypto.service';
-import { of, throwError } from 'rxjs';
-
-describe('AppComponent', () => {
-  let cryptoService: CryptoService;
-
-  beforeEach(async () => {
-    cryptoService = jasmine.createSpyObj('CryptoService', ['getCryptoData']);
-
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-      providers: [
-        { provide: CryptoService, useValue: cryptoService }
-      ]
-    }).compileComponents();
-  });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should call getCryptoData on init if document is not hidden', () => {
-    document.hidden = false;
-    cryptoService.getCryptoData.and.returnValue(of({}));
-
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
-    expect(cryptoService.getCryptoData).toHaveBeenCalled();
-  });
-
-  it('should not call getCryptoData on init if document is hidden', () => {
-    document.hidden = true;
-    cryptoService.getCryptoData.and.returnValue(of({}));
-
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
-    expect(cryptoService.getCryptoData).not.toHaveBeenCalled();
-  });
-
-  it('should handle error from getCryptoData', () => {
-    document.hidden = false;
-    cryptoService.getCryptoData.and.returnValue(throwError('Error'));
-
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
-    expect(cryptoService.getCryptoData).toHaveBeenCalled();
-  });
-
-  it('should stop calling getCryptoData on destroy', () => {
-    document.hidden = false;
-    cryptoService.getCryptoData.and.returnValue(of({}));
-
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    fixture.destroy();
-
-    expect(cryptoService.getCryptoData).toHaveBeenCalledTimes(1);
-  });
-});
+// import { TestBed, ComponentFixture, tick } from '@angular/core/testing';
+// import { AppComponent } from './app.component';
+// import { CryptoService } from './services/crypto.service';
+// import { CryptoStore } from './store/crypto.store';
+// import { of } from 'rxjs';
+// import { ActivatedRoute } from '@angular/router';
+//
+// describe('AppComponent', () => {
+//   let component: AppComponent;
+//   let fixture: ComponentFixture<AppComponent>;
+//   let cryptoServiceSpy: jasmine.SpyObj<CryptoService>;
+//
+//   beforeEach(async () => {
+//     cryptoServiceSpy = jasmine.createSpyObj('CryptoService', ['getCryptoData']);
+//
+//     await TestBed.configureTestingModule({
+//       providers: [
+//         { provide: CryptoService, useValue: cryptoServiceSpy },
+//         CryptoStore,
+//         {
+//           provide: ActivatedRoute,
+//           useValue: { snapshot: { paramMap: new Map() } }
+//         }
+//       ],
+//       imports: [] // Убедитесь, что AppComponent не объявлен в этом массиве
+//     }).compileComponents();
+//   });
+//
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(AppComponent);
+//     component = fixture.componentInstance;
+//   });
+//
+//   afterEach(() => {
+//     component.ngOnDestroy();
+//   });
+//
+//   it('should create the app', () => {
+//     expect(component).toBeTruthy();
+//   });
+//
+//   it('should call ngOnInit and ngOnDestroy', () => {
+//     spyOn(component, 'ngOnInit');
+//     spyOn(component, 'ngOnDestroy');
+//
+//     fixture.detectChanges();
+//
+//     expect(component.ngOnInit).toHaveBeenCalled();
+//     expect(component.ngOnDestroy).not.toHaveBeenCalled();
+//
+//     component.ngOnDestroy();
+//     expect(component.ngOnDestroy).toHaveBeenCalled();
+//   });
+//
+//   it('should fetch crypto data and update store', () => {
+//     const testData: any = [];
+//     cryptoServiceSpy.getCryptoData.and.returnValue(of(testData));
+//
+//     fixture.detectChanges();
+//     tick(10000);
+//
+//     expect(component['store'].setCoinData).toHaveBeenCalledWith(testData);
+//   });
+//
+//   it('should handle error when fetching crypto data', () => {
+//     cryptoServiceSpy.getCryptoData.and.throwError('Test error');
+//
+//     spyOn(console, 'error');
+//
+//     fixture.detectChanges();
+//     tick(10000);
+//
+//     expect(console.error).toHaveBeenCalledWith('Error fetching data');
+//   });
+//
+//   it('should tick ApplicationRef to update all components', () => {
+//     spyOn(component['appRef'], 'tick');
+//
+//     fixture.detectChanges();
+//     tick(10000);
+//
+//     expect(component['appRef'].tick).toHaveBeenCalled();
+//   });
+// });

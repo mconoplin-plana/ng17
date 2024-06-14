@@ -1,7 +1,15 @@
+<div class="d-flex justify-content-end mb-4">
+  <mat-button-toggle-group [ngModel]="store.currentTime()" (change)="store.setTime($event.value)">
+    @for (time of times; track time.id) {
+      <mat-button-toggle [value]="time.id">{{time.name}}</mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+</div>
+
 <div class="row">
-  @for (coin of coins(); track coin) {
-    <div class="col-4">
-      <app-coin-block></app-coin-block>
+  @for (coin of store.currentCoins(); track coin) {
+    <div class="col-4 mb-4">
+      <app-coin-block [coinData]="store.getCurrentCoinData(coin)"></app-coin-block>
     </div>
   }
 </div>
